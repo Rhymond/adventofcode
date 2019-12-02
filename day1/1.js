@@ -2,13 +2,3 @@ const input = [71343, 60747, 122054, 67364, 53017, 81716, 55910, 120565, 59809, 
 
 const answer1 = input.reduce((a, val) => a + Math.floor(val/3)-2, 0);
 console.log(answer1);
-
-const answer2 = input.reduce((a, val) => {
-  let c = Math.floor(val/3)-2;
-  while (c > 0) {
-    a += c;
-    c = Math.floor(c/3)-2;
-  }
-  return a
-}, 0);
-console.log(answer2);
