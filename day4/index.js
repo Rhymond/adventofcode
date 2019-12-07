@@ -1,37 +1,37 @@
-const { wire1, wire2 } = require("./input");
+// const isValid = pass => {
+//   for (let i = 1; i < pass.length; i++) {
+//     if (+pass[i] < +pass[i-1]) return false;
+//   }
+//
+//   const np = [...new Set(pass)];
+//   for (let i = 0; i <= np.length; i++) {
+//     if (pass.split('').filter(v => (v === np[i])).length === 2) return true;
+//   }
+//
+//   return false;
+// };
 
-const getCords = (wire) => {
-  let cords = [];
-  let x = 0;
-  let y = 0;
-  wire.forEach(dir => {
-    let t = parseInt(dir.substr(1));
-    switch (dir[0]) {
-      case "R":
-        cords.push(...Array.from({length: t}, v => `${x++},${y}` ));
-        break;
-      case "L":
-        cords.push(...Array.from({length: t}, v => `${x--},${y}`));
-        break;
-      case "D":
-        cords.push(...Array.from({length: t}, v => `${x},${y--}`));
-        break;
-      case "U":
-        cords.push(...Array.from({length: t}, v => `${x},${y++}`));
-        break;
-    }
-  });
+// console.log(isValid("123456"));
+// console.log(isValid("123666"));
+// console.log(isValid("123665"));
+// console.log(isValid("111122"));
+// const test = "123456";
 
-  return cords;
-};
+let sum1 = 0;
+let sum2 = 0;
+for (let x = 134792; x <= 675810; x++) {
+  let pass = x.toString();
+  if (pass !== pass.split('').sort().join('')) continue;
 
-const cords1 = getCords(wire1);
-const cords2 = getCords(wire2);
-const matching = cords1.filter(e => cords2.includes(e));
-matching.shift();
+  const np = [...new Set(pass)];
+  if (np.length < pass.length) {
+    sum1++;
+  }
 
-const distance = matching.map(v => v.split(",").reduce((a, v) => a += Math.abs(+v), 0));
-console.log(Math.min(...distance));
+  for (let i = 0; i <= np.length; i++) {
+    if (pass.split('').filter(v => (v === np[i])).length === 2) sum2++;
+  }
+}
 
-const steps = matching.map(v => cords1.indexOf(v) + cords2.indexOf(v));
-console.log(Math.min(...steps));
+console.log(sum1);
+console.log(sum2);
